@@ -948,14 +948,14 @@ function clickFont(num)
 {
     if(clickAviable == true)
     {
-        clickAviable = false
-
         //SINGLEPLAYER
         if(multiplayer === "false")
         {
                 //hai premuto il pulsante corretto
                 if(nGiusto == num)
                 {
+                    clickAviable = false
+                    
                     setPoints(+100)
 
                     overlayGiusto(true)
@@ -968,6 +968,8 @@ function clickFont(num)
                     caricaLettere()
 
                     timerStart()
+
+                    
                 }   
                 else    //hai sbagliato
                 {
@@ -986,6 +988,8 @@ function clickFont(num)
                 //hai premuto il pulsante corretto
                 if(nGiusto == num)
                 {
+                    clickAviable = false
+
                     setPoints(+100)
 
                     overlayGiusto(true)
@@ -1151,6 +1155,11 @@ if(multiplayer == "true")
             document.getElementById("disconnect").innerHTML += "<br><br>L'avversario ha vinto la partita con "+points+" punti.<br>Tu ne hai fatti solo "+data
         }
         
+        if( points > localStorage.getItem("points") )
+        {
+            localStorage.setItem('points', points)
+        }
+
         overlayDisconnect(true)
 
         setTimeout(goBack,10000)
