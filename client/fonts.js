@@ -955,7 +955,7 @@ function clickFont(num)
                 if(nGiusto == num)
                 {
                     clickAviable = false
-                    
+
                     setPoints(+100)
 
                     overlayGiusto(true)
@@ -1152,7 +1152,7 @@ if(multiplayer == "true")
         }
         else
         {
-            document.getElementById("disconnect").innerHTML += "<br><br>L'avversario ha vinto la partita con "+points+" punti.<br>Tu ne hai fatti solo "+data
+            document.getElementById("disconnect").innerHTML += "<br><br>L'avversario ha vinto la partita con "+data+" punti.<br>Tu ne hai fatti solo "+points
         }
         
         if( points > localStorage.getItem("points") )
