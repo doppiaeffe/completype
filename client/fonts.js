@@ -860,7 +860,6 @@ var livello = 1
 var multiplayer = sessionStorage.getItem("multiplayer");
 var timer = null;
 var choosenChars = [];
-var clickAviable = true;
 
 
 
@@ -946,16 +945,13 @@ function caricaLettere()
 //pulsanti di risposta
 function clickFont(num)
 {
-    if(clickAviable == true)
-    {
         //SINGLEPLAYER
         if(multiplayer === "false")
         {
                 //hai premuto il pulsante corretto
                 if(nGiusto == num)
                 {
-                    clickAviable = false
-
+                   
                     setPoints(+100)
 
                     overlayGiusto(true)
@@ -988,8 +984,6 @@ function clickFont(num)
                 //hai premuto il pulsante corretto
                 if(nGiusto == num)
                 {
-                    clickAviable = false
-
                     setPoints(+100)
 
                     overlayGiusto(true)
@@ -1001,7 +995,7 @@ function clickFont(num)
                     setPoints(-50)
                 }
         }
-    }
+    
 }
 
 //gestisci l'overlay di risposta giusta
@@ -1118,15 +1112,12 @@ if(multiplayer == "true")
 
         caricaFont()
         caricaLettere()
-        
-        clickAviable = true
+
         setTimeout(function()
         {
             overlayMultiplayer(false)
             overlayGiusto(false)
             overlayFirst(false)
-
-            clickAviable = true
         },1000)
         
 
@@ -1136,7 +1127,6 @@ if(multiplayer == "true")
     //il nemico ha fatto punto
     socket.on('enemyPoint',function(data)
     {  
-        clickAviable = false
         overlayFirst(true)
     })
 
