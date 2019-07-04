@@ -14,7 +14,7 @@ body {
     text-align: center;
     display: grid;
     position: relative;
-    height: 80vh;
+    height: 75vh;
     grid-template-rows: 1fr 3fr;
     line-height: 1;
 }
@@ -48,7 +48,7 @@ body {
     display: grid;
     grid-template-columns: 0.1fr 1fr 1fr 1fr 0.1fr;
     grid-template-rows: 1fr;
-    margin-top: 10%;
+    margin-top: 5%;
 }
 
 .capt{
@@ -150,7 +150,7 @@ body {
 }
 
 .timer {
-    margin-top:20%;
+    margin-top:5%;
     height: auto;
     line-height: 0;
     font-size: calc(1.5em + 2.7vw);
