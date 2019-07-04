@@ -860,6 +860,9 @@ var livello = 1
 var multiplayer = sessionStorage.getItem("multiplayer");
 var timer = null;
 var choosenChars = [];
+var clickAviable = true;
+
+
 
 //utility , genera un numero casuale tra quelli inseriti
 function randomNumber(minimum, maximum)
@@ -943,52 +946,57 @@ function caricaLettere()
 //pulsanti di risposta
 function clickFont(num)
 {
-    //SINGLEPLAYER
-    if(multiplayer === "false")
+    if(clickAviable == true)
     {
-            //hai premuto il pulsante corretto
-            if(nGiusto == num)
-            {
-                setPoints(+100)
-
-                overlayGiusto(true)
-                setTimeout(overlayGiusto,1000, false)
-
-                scegliFont()
-                caricaFont()
-
-                scegliLettere()
-                caricaLettere()
-
-                timerStart()
-            }   
-            else    //hai sbagliato
-            {
-                if( points > localStorage.getItem("points") )
+        clickAviable = false
+        
+        //SINGLEPLAYER
+        if(multiplayer === "false")
+        {
+                //hai premuto il pulsante corretto
+                if(nGiusto == num)
                 {
-                    localStorage.setItem('points', points)
+                    setPoints(+100)
+
+                    overlayGiusto(true)
+                    setTimeout(overlayGiusto,1000, false)
+
+                    scegliFont()
+                    caricaFont()
+
+                    scegliLettere()
+                    caricaLettere()
+
+                    timerStart()
+                }   
+                else    //hai sbagliato
+                {
+                    if( points > localStorage.getItem("points") )
+                    {
+                        localStorage.setItem('points', points)
+                    }
+
+                    overlaySbagliato(true)
+                    timerStop()
+                    setTimeout(goBack,1000)
                 }
+        }
+        else    //MULTIPLAYER
+        {
+                //hai premuto il pulsante corretto
+                if(nGiusto == num)
+                {
+                    setPoints(+100)
 
-                overlaySbagliato(true)
-                timerStop()
-                setTimeout(goBack,1000)
-            }
-    }
-    else    //MULTIPLAYER
-    {
-            //hai premuto il pulsante corretto
-            if(nGiusto == num)
-            {
-                setPoints(+100)
+                    overlayGiusto(true)
 
-                overlayGiusto(true)
-
-                socket.emit("first","")
-            }
-            else    //hai sbagliato
-            {
-                setPoints(-50)
-            }
+                    socket.emit("first","")
+                }
+                else    //hai sbagliato
+                {
+                    setPoints(-50)
+                }
+        }
     }
 }
 
@@ -1112,6 +1120,8 @@ if(multiplayer == "true")
             overlayMultiplayer(false)
             overlayGiusto(false)
             overlayFirst(false)
+
+            clickAviable = true
         },1000)
         
 
@@ -1121,6 +1131,7 @@ if(multiplayer == "true")
     //il nemico ha fatto punto
     socket.on('enemyPoint',function(data)
     {  
+        clickAviable = false
         overlayFirst(true)
     })
 
@@ -1129,6 +1140,7 @@ if(multiplayer == "true")
     socket.on("logout",function(data)
     {
         document.getElementById("disconnect").innerHTML = "L'avversario ha abbandonato la partita."
+
         if(points > data)
         {
             document.getElementById("disconnect").innerHTML += "<br><br>Hai vinto la partita con "+points+" punti.<br>L'avversario ne ha fatti solo "+data
