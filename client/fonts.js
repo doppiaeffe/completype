@@ -1070,7 +1070,7 @@ function goBack()
 
 
 //fai partire il countdown
-function timerStart()
+/*function timerStart()
 {
     time = 11
     document.getElementById("timer").innerHTML = time
@@ -1088,7 +1088,7 @@ function timerStart()
         }
         
     },1000)
-}
+}*/
 
 function timerStop()
 {
