@@ -150,7 +150,7 @@ body {
 }
 
 .timer {
-    margin-top:5%;
+    margin-bottom: 0.01%;
     height: auto;
     line-height: 0;
     font-size: calc(1.5em + 2.7vw);
