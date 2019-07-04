@@ -952,7 +952,10 @@ function clickFont(num)
                     setPoints(+100)
 
                     overlayGiusto(true)
-                    setTimeout(overlayGiusto,1000, false)
+                    nascondiScelte(false)
+                    setTimeout(nascondiScelte,1000, true)
+                    setTimeout(overlayGiusto,1100, false)
+                    
 
                     scegliFont()
                     caricaFont()
@@ -972,6 +975,7 @@ function clickFont(num)
                     }
 
                     overlaySbagliato(true)
+                    nascondiScelte(false)
                     timerStop()
                     setTimeout(goBack,1000)
                 }
@@ -986,6 +990,7 @@ function clickFont(num)
                     if(points < 1000)
                     {
                         overlayGiusto(true)
+                        nascondiScelte(false)
                     }
 
                     socket.emit("first")
@@ -1015,6 +1020,7 @@ function overlayGiusto(val)
     if(val == true) {mode = "inline"}else{mode = "none"}
     document.getElementById("risultato").style.display = mode
     document.getElementById("giusto").style.display = mode
+    
 }
 
 //gestisci l'overlay di risposta sbagliata
@@ -1024,6 +1030,7 @@ function overlaySbagliato(val)
     if(val == true) {mode = "inline"}else{mode = "none"}
     document.getElementById("risultato").style.display = mode
     document.getElementById("sbagliato").style.display = mode
+    
 }
 
 //gestisci l'overlay di tempo scaduto
@@ -1033,6 +1040,16 @@ function overlayTempo(val)
     if(val == true) {mode = "inline"}else{mode = "none"}
     document.getElementById("risultato").style.display = mode
     document.getElementById("tempo").style.display = mode
+    
+}
+
+//nascondi tasti
+function nascondiScelte(val)
+{   
+    let mode = true;
+    if(val == true) {mode = "block"}else{mode = "none"}
+    document.getElementById("scelte").style.display = mode
+    
 }
 
 //gestisci l'overlay di attesa del multiplayer
@@ -1051,6 +1068,7 @@ function overlayFirst(val)
     if(val == true) {mode = "inline"}else{mode = "none"}
     document.getElementById("risultato").style.display = mode
     document.getElementById("first").style.display = mode
+    
 }
 
 //gestisci l'overlay di quando il nemico si disconette
@@ -1070,7 +1088,7 @@ function goBack()
 
 
 //fai partire il countdown
-/*function timerStart()
+function timerStart()
 {
     time = 11
     document.getElementById("timer").innerHTML = time
@@ -1083,12 +1101,14 @@ function goBack()
 
         if(time < 1)
         {
-            overlayTempo(true)     
+            overlayTempo(true)  
+            nascondiScelte(false)
             setTimeout(goBack,4000)
+            
         }
         
     },1000)
-}*/
+}
 
 function timerStop()
 {
@@ -1125,20 +1145,24 @@ if(multiplayer == "true")
         caricaLettere()
 
         setTimeout(function()
-        {
+        { 
+        nascondiScelte(true)
+        },800)
+
+        setTimeout(function()
+        {         
             overlayMultiplayer(false)
             overlayGiusto(false)
             overlayFirst(false)
         },1000)
-        
-
-        //timerStart()   
+ 
     })
 
     //il nemico ha fatto punto
     socket.on('enemyPoint',function(data)
     {  
         overlayFirst(true)
+        nascondiScelte(false)
     })
 
 
@@ -1161,6 +1185,7 @@ if(multiplayer == "true")
         }
 
         overlayDisconnect(true)
+        nascondiScelte(false)
 
         setTimeout(goBack,10000)
     })
@@ -1173,6 +1198,7 @@ else
     scegliLettere()
     caricaLettere()
 
+    //rimuovi rettangolo bianco
     setTimeout(overlayDisconnect,1000, false)
 
     timerStart()
