@@ -949,7 +949,7 @@ function clickFont(num)
     if(clickAviable == true)
     {
         clickAviable = false
-        
+
         //SINGLEPLAYER
         if(multiplayer === "false")
         {
@@ -1114,7 +1114,8 @@ if(multiplayer == "true")
 
         caricaFont()
         caricaLettere()
-
+        
+        clickAviable = true
         setTimeout(function()
         {
             overlayMultiplayer(false)
