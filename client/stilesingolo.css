@@ -31,7 +31,7 @@ body {
 .lettera {
     height: auto;
     font-size: calc(1em + 3vw);
-    padding-bottom: 30%;
+    padding-bottom: 23%;
 }
 
 .lettver{
@@ -48,7 +48,7 @@ body {
     display: grid;
     grid-template-columns: 0.1fr 1fr 1fr 1fr 0.1fr;
     grid-template-rows: 1fr;
-    margin-top: 5%;
+    margin-top: 0%;
 }
 
 .capt{
@@ -150,7 +150,7 @@ body {
 }
 
 .timer {
-    margin-bottom: 0.01%;
+    margin-bottom: 0%;
     height: auto;
     line-height: 0;
     font-size: calc(1.5em + 2.7vw);
