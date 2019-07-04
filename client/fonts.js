@@ -861,8 +861,6 @@ var multiplayer = sessionStorage.getItem("multiplayer");
 var timer = null;
 var choosenChars = [];
 
-
-
 //utility , genera un numero casuale tra quelli inseriti
 function randomNumber(minimum, maximum)
 {
@@ -873,7 +871,6 @@ function randomChar(string)
 {
     return string.charAt(Math.floor(Math.random() * string.length));
 }
-
 
 function setPoints(punti)
 {
@@ -986,7 +983,7 @@ function clickFont(num)
                 {
                     setPoints(+100)
 
-                    if(points < 500)
+                    if(points < 1000)
                     {
                         overlayGiusto(true)
                     }
@@ -1001,6 +998,15 @@ function clickFont(num)
         }
     
 }
+
+//timer multi
+function timermulti(val)
+{   
+    let mode = true;
+    if(val == true) {mode = "block"}else{mode = "none"}
+    document.getElementById("timer").style.display = mode
+}
+
 
 //gestisci l'overlay di risposta giusta
 function overlayGiusto(val)
@@ -1096,7 +1102,8 @@ if(multiplayer == "true")
 {
     var socket = io();
 
-    overlayMultiplayer(true)
+    overlayMultiplayer(true);
+    timermulti(false);
 
 
     //inizia un nuovo livello ricevendo le informazioni dal server
