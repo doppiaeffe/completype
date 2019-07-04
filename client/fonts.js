@@ -986,13 +986,17 @@ function clickFont(num)
                 {
                     setPoints(+100)
 
-                    overlayGiusto(true)
+                    if(points < 500)
+                    {
+                        overlayGiusto(true)
+                    }
 
-                    socket.emit("first","")
+                    socket.emit("first")
                 }
                 else    //hai sbagliato
                 {
                     setPoints(-50)
+                    socket.emit("removePoints")
                 }
         }
     
@@ -1134,15 +1138,14 @@ if(multiplayer == "true")
     //il nemico si è disconesso
     socket.on("logout",function(data)
     {
-        document.getElementById("disconnect").innerHTML = "L'avversario ha abbandonato la partita."
-
+ 
         if(points > data)
         {
-            document.getElementById("disconnect").innerHTML += "<br><br>Hai vinto la partita con "+points+" punti.<br>L'avversario ne ha fatti solo "+data
+            document.getElementById("disconnect").innerHTML = "<br><br>Hai vinto la partita con "+points+" punti.<br>L'avversario ne ha fatti solo "+data
         }
         else
         {
-            document.getElementById("disconnect").innerHTML += "<br><br>L'avversario ha vinto la partita con "+data+" punti.<br>Tu ne hai fatti solo "+points
+            document.getElementById("disconnect").innerHTML = "<br><br>L'avversario ha vinto la partita con "+data+" punti.<br>Tu ne hai fatti solo "+points
         }
         
         if( points > localStorage.getItem("points") )

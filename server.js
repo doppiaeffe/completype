@@ -972,21 +972,32 @@ io.sockets.on("connection", function(socket)
         console.log("l'utente "+socket.id+" si è disconesso")
     });
 
+    socket.on("removePoints", function()
+    {
+        socket.points -= 50
+    })
 
     socket.on("first", function()
     {
-        socketList[socket.versus].emit("enemyPoint")
         socket.points += 100;
         
-
-        setTimeout(function(socket)
+        if(socket.points == 500)
         {
-            let pack = generateFont()
+            socketList[socket.versus].emit("logout", socket.points)
+            socketList[socket.id].emit("logout", socketList[socket.versus].points)
+        }
+        else
+        {
+            socketList[socket.versus].emit("enemyPoint")
 
-            socketList[socket.id].emit("matchStart", pack);
-            socketList[socket.versus].emit("matchStart", pack);
-        }, 1000, socket)
-        
+            setTimeout(function(socket)
+            {
+                let pack = generateFont()
+
+                socketList[socket.id].emit("matchStart", pack);
+                socketList[socket.versus].emit("matchStart", pack);
+            }, 1000, socket)
+        }
     });
 })
 
