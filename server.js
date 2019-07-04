@@ -981,7 +981,7 @@ io.sockets.on("connection", function(socket)
     {
         socket.points += 100;
         
-        if(socket.points == 500)
+        if(socket.points == 1000)
         {
             socketList[socket.versus].emit("logout", socket.points)
             socketList[socket.id].emit("logout", socketList[socket.versus].points)
