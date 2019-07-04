@@ -1045,11 +1045,11 @@ function overlayTempo(val)
 
 //nascondi tasti
 function nascondiScelte(val)
-{   
+{   /*
     let mode = true;
     if(val == true) {mode = "block"}else{mode = "none"}
     document.getElementById("scelte").style.display = mode
-    
+    */
 }
 
 //gestisci l'overlay di attesa del multiplayer
