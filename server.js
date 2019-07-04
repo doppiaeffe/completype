@@ -920,6 +920,7 @@ function generateFont()
 
     let choosenChar = generateLetters()
 
+    
     //bellissimo pacchetto
     let pack =
     {
