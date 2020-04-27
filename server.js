@@ -4,6 +4,7 @@ var cors = require('cors');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
 var methodOverride = require('method-override')
+var stringify = require('json-stringify-safe');
 
 var app = express();
 app.use(logger('dev'));
@@ -17,7 +18,8 @@ var io = require("socket.io")(server,{});
 app.get("/", function(req, res)  {  res.sendFile(__dirname + "/index.html");});   
 app.get("/users", function(req, res)  
 { 
-     res.send({ socket:socketList, waiting:waitingPlayers})
+
+     res.send({waiting:waitingPlayers})
 });   
 
 
