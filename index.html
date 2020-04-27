@@ -1,13 +1,15 @@
 <html>
     <body>
 
-        <a>LISTA UTENTI CONNESSI</a>
-        <br>
+        <a>LISTA UTENTI IN ATTESA</a>
+        <br><br>
         <div id="utenti">
 
         </div>
 
         <script>
+            //var remoteIP = "http://localhost:8080/users"
+            var remoteIP = "https://completype-android.herokuapp.com/users"
 
             function httpGet(theUrl, callback)
             {
@@ -22,9 +24,49 @@
 
             setInterval(function()
             {
-                httpGet("https://completype-android.herokuapp.com/users",function(ret)
+                httpGet(remoteIP,function(ret)
                 {
-                    console.log(ret)
+                    var retP = JSON.parse(ret)
+                    var listaConnessi = retP.waiting;
+                    var listDom = document.querySelectorAll("#connessi");
+
+                    console.log(retP)
+
+                    for(var n=0; n<listDom.length; n++)
+                    {
+                        var curr = listDom[n];
+                        var present = false
+
+                        for(var i=0; i<listaConnessi.length; i++)
+                        {
+                            var id = listaConnessi[i]
+
+                            if(curr.innerHTML == id)
+                            {
+                                present = true
+                                listaConnessi[n] = null
+                            }      
+                        }
+
+                        if (present == false)
+                            curr.parentElement.removeChild(curr)
+                    }
+
+                    for(var i=0; i<listaConnessi.length; i++)
+                    {
+                        var id = listaConnessi[i]
+
+                        if(id != null)
+                        {
+                            var newDiv = document.createElement("div"); 
+                            newDiv.id = "connessi"
+                            newDiv.innerHTML = id
+                            document.querySelector("#utenti").appendChild(newDiv);
+                        }      
+                    }
+
+                    
+
                 })
             },100)
         </script>

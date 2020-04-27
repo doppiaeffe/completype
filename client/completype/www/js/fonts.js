@@ -1123,6 +1123,7 @@ function timerStop()
 if(multiplayer == "true")
 {
     var socket = io("https://completype-android.herokuapp.com/");
+    //var socket = io("http://localhost:8080");
 
     overlayMultiplayer(true);
     timermulti(false);
