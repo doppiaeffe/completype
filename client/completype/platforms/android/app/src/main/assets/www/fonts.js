@@ -1,32 +1,3 @@
-/*
-var express = require('express');
-var bodyParser = require('body-parser');
-var logger = require('morgan');
-var methodOverride = require('method-override')
-var cors = require('cors');
-
-var app = express();
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(methodOverride());
-app.use(cors());
-*/
-
-var server = require("http").Server(app);
-var io = require("socket.io")(server,{});
-/*
-app.get("/", function(req, res)  {  res.sendFile(__dirname + "/client/index.html");});   
-app.use("/client", express.static(__dirname + "/client"));
-*/
-
-server.listen(process.env.PORT || 8080);
-console.log("server started");
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-var socketList = {};
-var waitingPlayers = [];
-
 var fonts=["ABeeZee",
 "Abel",
 "Abhaya+Libre",
@@ -874,8 +845,21 @@ var fonts=["ABeeZee",
 "Zilla+Slab+Highlight",
 ];
 var lungh = fonts.length;
+var fontscelta1 = ""
+var fontscelta2 = ""
+var fontscelta3 = ""
+var fontscelta1app = ""
+var fontscelta2app = ""
+var fontscelta3app = ""
 var alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWYZabcdefghijklmnopqrstuvwyz'
-
+var nGiusto = 0
+var fontGiusto = ""
+var points = 0
+var time = 11
+var livello = 1
+var multiplayer = sessionStorage.getItem("multiplayer");
+var timer = null;
+var choosenChars = [];
 
 //utility , genera un numero casuale tra quelli inseriti
 function randomNumber(minimum, maximum)
@@ -888,143 +872,336 @@ function randomChar(string)
     return string.charAt(Math.floor(Math.random() * string.length));
 }
 
+function setPoints(punti)
+{
+    points += punti
+    document.getElementById("punti").innerHTML = points;
+}
+
+//sceglie 3 font casuali
+function scegliFont()
+{
+    fontscelta1 = fonts[Math.floor(Math.random()*lungh)];
+    fontscelta2 = fonts[Math.floor(Math.random()*lungh)];
+    fontscelta3 = fonts[Math.floor(Math.random()*lungh)];
+
+    fontscelta1app = fontscelta1.split('+').join(" ");
+    fontscelta2app = fontscelta2.split('+').join(" ");
+    fontscelta3app = fontscelta3.split('+').join(" ");
+
+    nGiusto = randomNumber(1,3)
+}
+
+
+//scarica le font scelte da google font poi abbinali ai pulsanti
+function caricaFont()
+{
+    document.getElementById("stile").innerHTML="@import url('https://fonts.googleapis.com/css?family="+fontscelta1+"|"+fontscelta2+"|"+fontscelta3+"');";
+    
+    document.getElementById("prima").style="font-family:'"+fontscelta1app+"';";
+    document.getElementById("seconda").style="font-family:'"+fontscelta2app+"';";
+    document.getElementById("terza").style="font-family:'"+fontscelta3app+"';";
+
+    
+    switch(nGiusto)
+    {
+        case 1 : {fontGiusto ="font-family:'"+fontscelta1app+"';"; break;}
+        case 2 : {fontGiusto ="font-family:'"+fontscelta2app+"';"; break;}
+        case 3 : {fontGiusto ="font-family:'"+fontscelta3app+"';"; break;}
+    }
+}
+
 
 //sceglie e abbina in modo casuale le lettere indizio nella griglia
-function generateLetters()
+function scegliLettere()
 {
     let tempAlphabet = alphabet
-    let choosenChar = []
     
     for(let i=0; i<24; i++)
     {
         let char = randomChar(tempAlphabet)	
 
-        choosenChar.push(char)
+        choosenChars.push(char)
 
         tempAlphabet = tempAlphabet.replace(char,"")
     }
-
-    return choosenChar
 }
 
-
-
-function generateFont()
+//sceglie e abbina in modo casuale le lettere indizio nella griglia
+function caricaLettere()
 {
-    let fontscelta1 = fonts[Math.floor(Math.random()*lungh)];
-    let fontscelta2 = fonts[Math.floor(Math.random()*lungh)];
-    let fontscelta3 = fonts[Math.floor(Math.random()*lungh)];
-
-    let fontscelta1app = fontscelta1.split('+').join(" ");
-    let fontscelta2app = fontscelta2.split('+').join(" ");
-    let fontscelta3app = fontscelta3.split('+').join(" ");
-
-    let nGiusto = randomNumber(1,3)
-
-    let choosenChar = generateLetters()
-
+    let lettere = document.querySelectorAll("div.lettera");
     
-    //bellissimo pacchetto
-    let pack =
+    for(let i=0; i<lettere.length; i++)
     {
-        font1:fontscelta1, 
-        font2:fontscelta2, 
-        font3:fontscelta3,
-
-        font1app:fontscelta1app, 
-        font2app:fontscelta2app, 
-        font3app:fontscelta3app,
-
-        giusto:nGiusto,
-
-        chars:choosenChar,
+        lettere[i].innerHTML = choosenChars[i]
+        lettere[i].style = fontGiusto
     }
-
-    return pack
-
 }
 
-//avviamento del socket///////////
-io.sockets.on("connection", function(socket)
+//pulsanti di risposta
+function clickFont(num)
 {
-    console.log("si è conesso l'utente = "+socket.id)
+        //SINGLEPLAYER
+        if(multiplayer === "false")
+        {
+                //hai premuto il pulsante corretto
+                if(nGiusto == num)
+                {
+                   
+                    setPoints(+100)
 
-    socketList[socket.id] = socket;
-    waitingPlayers.push(socket.id)
-    socket.versus = null;
-    socket.points = 0;
+                    overlayGiusto(true)
+                    nascondiScelte(false)
+                    setTimeout(nascondiScelte,1000, true)
+                    setTimeout(overlayGiusto,1100, false)
+                    
+
+                    scegliFont()
+                    caricaFont()
+
+                    scegliLettere()
+                    caricaLettere()
+
+                    timerStart()
+
+                    
+                }   
+                else    //hai sbagliato
+                {
+                    if( points > localStorage.getItem("points") )
+                    {
+                        localStorage.setItem('points', points)
+                    }
+
+                    overlaySbagliato(true)
+                    nascondiScelte(false)
+                    timerStop()
+                    setTimeout(goBack,1000)
+                }
+        }
+        else    //MULTIPLAYER
+        {
+                //hai premuto il pulsante corretto
+                if(nGiusto == num)
+                {
+                    setPoints(+100)
+
+                    if(points < 1000)
+                    {
+                        overlayGiusto(true)
+                        nascondiScelte(false)
+                    }
+
+                    socket.emit("first")
+                }
+                else    //hai sbagliato
+                {
+                    setPoints(-50)
+                    socket.emit("removePoints")
+                }
+        }
     
-    searchPlayers()
+}
 
-    socket.on("disconnect", function()
-    {
-        if(socket.versus != null)
-        {
-            socketList[socket.versus].versus = null;
-            socketList[socket.versus].emit("logout",socket.points)        
-        }
-        else
-        {
-            let pos = waitingPlayers.indexOf(socket.id)
-            if(pos != -1)
-            {
-                waitingPlayers.splice(pos,1)
-            }
-        }
-        delete socketList[socket.id];   
-        console.log("l'utente "+socket.id+" si è disconesso")
-    });
+//timer multi
+function timermulti(val)
+{   
+    let mode = true;
+    if(val == true) {mode = "block"}else{mode = "none"}
+    document.getElementById("timer").style.display = mode
+}
 
-    socket.on("removePoints", function()
+
+//gestisci l'overlay di risposta giusta
+function overlayGiusto(val)
+{   
+    let mode = true;
+    if(val == true) {mode = "inline"}else{mode = "none"}
+    document.getElementById("risultato").style.display = mode
+    document.getElementById("giusto").style.display = mode
+    
+}
+
+//gestisci l'overlay di risposta sbagliata
+function overlaySbagliato(val)
+{   
+    let mode = true;
+    if(val == true) {mode = "inline"}else{mode = "none"}
+    document.getElementById("risultato").style.display = mode
+    document.getElementById("sbagliato").style.display = mode
+    
+}
+
+//gestisci l'overlay di tempo scaduto
+function overlayTempo(val)
+{   
+    let mode = true;
+    if(val == true) {mode = "inline"}else{mode = "none"}
+    document.getElementById("risultato").style.display = mode
+    document.getElementById("tempo").style.display = mode
+    
+}
+
+//nascondi tasti
+function nascondiScelte(val)
+{   
+    let mode = true;
+    if(val == true) {mode = "block"}else{mode = "none"}
+    document.getElementById("prima").style.display = mode
+    document.getElementById("seconda").style.display = mode
+    document.getElementById("terza").style.display = mode
+    
+}
+
+//gestisci l'overlay di attesa del multiplayer
+function overlayMultiplayer(val)
+{
+    let mode = true;
+    if(val == true) {mode = "inline"}else{mode = "none"}
+    document.getElementById("risultato").style.display = mode
+    document.getElementById("ricerca").style.display = mode
+}
+
+//gestisci l'overlay di quando il nemico fa un punto
+function overlayFirst(val)
+{
+    let mode = true;
+    if(val == true) {mode = "inline"}else{mode = "none"}
+    document.getElementById("risultato").style.display = mode
+    document.getElementById("first").style.display = mode
+    
+}
+
+//gestisci l'overlay di quando il nemico si disconette
+function overlayDisconnect(val)
+{
+    let mode = true;
+    if(val == true) {mode = "inline"}else{mode = "none"}
+    document.getElementById("risultato").style.display = mode
+    document.getElementById("disconnect").style.display = mode
+}
+
+//torna al menu iniziale
+function goBack()
+{
+    window.location.href = "index.html"   
+}
+
+
+//fai partire il countdown
+function timerStart()
+{
+    time = 11
+    document.getElementById("timer").innerHTML = time
+    timerStop()
+
+    timer = setInterval(function()
     {
-        socket.points -= 50
+        time -= 1
+        document.getElementById("timer").innerHTML = time
+
+        if(time < 1)
+        {
+            overlayTempo(true)  
+            nascondiScelte(false)
+            setTimeout(goBack,4000)
+            
+        }
+        
+    },1000)
+}
+
+function timerStop()
+{
+    clearInterval(timer)
+}
+
+
+
+
+if(multiplayer == "true")
+{
+    var socket = io();
+
+    overlayMultiplayer(true);
+    timermulti(false);
+
+
+    //inizia un nuovo livello ricevendo le informazioni dal server
+    socket.on('matchStart',function(data)
+    {  
+        fontscelta1 = data.font1
+        fontscelta2 = data.font2
+        fontscelta3 = data.font3
+
+        fontscelta1app = data.font1app
+        fontscelta2app = data.font2app
+        fontscelta3app = data.font3app
+
+        nGiusto = data.giusto
+
+        choosenChars = data.chars
+
+        caricaFont()
+        caricaLettere()
+
+        setTimeout(function()
+        { 
+        nascondiScelte(true)
+        },800)
+
+        setTimeout(function()
+        {         
+            overlayMultiplayer(false)
+            overlayGiusto(false)
+            overlayFirst(false)
+        },1000)
+ 
     })
 
-    socket.on("first", function()
+    //il nemico ha fatto punto
+    socket.on('enemyPoint',function(data)
+    {  
+        overlayFirst(true)
+        nascondiScelte(false)
+    })
+
+
+    //il nemico si è disconesso
+    socket.on("logout",function(data)
     {
-        socket.points += 100;
-        
-        if(socket.points >= 1000)
+ 
+        if(points > data)
         {
-            socketList[socket.versus].emit("logout", socket.points)
-            socketList[socket.id].emit("logout", socketList[socket.versus].points)
+            document.getElementById("disconnect").innerHTML = "<br><br>Hai vinto la partita con "+points+" punti.<br>L'avversario ne ha fatti solo "+data
         }
         else
         {
-            socketList[socket.versus].emit("enemyPoint")
-
-            setTimeout(function(socket)
-            {
-                let pack = generateFont()
-
-                socketList[socket.id].emit("matchStart", pack);
-                socketList[socket.versus].emit("matchStart", pack);
-            }, 1000, socket)
+            document.getElementById("disconnect").innerHTML = "<br><br>L'avversario ha vinto la partita con "+data+" punti.<br>Tu ne hai fatti solo "+points
         }
-    });
-})
+        
+        if( points > localStorage.getItem("points") )
+        {
+            localStorage.setItem('points', points)
+        }
 
+        overlayDisconnect(true)
+        nascondiScelte(false)
 
-
-//abbina giocatori
-function searchPlayers()
+        setTimeout(goBack,10000)
+    })
+}
+else
 {
-    if(waitingPlayers.length > 1)
-    {
-        let player1 = waitingPlayers[0]
-        let player2 = waitingPlayers[1]
+    scegliFont()
+    caricaFont()
 
-        socketList[player1].versus = player2
-        socketList[player2].versus = player1
+    scegliLettere()
+    caricaLettere()
 
-        let pack = generateFont()
+    //rimuovi rettangolo bianco
+    setTimeout(overlayDisconnect,1000, false)
 
-        socketList[player1].emit("matchStart", pack);
-        socketList[player2].emit("matchStart", pack);
-        
-        waitingPlayers.splice(0, 2);
-
-        console.log("p1 versus="+socketList[player1].versus+"     p2 versus="+socketList[player2].versus)
-        
-    }
+    timerStart()
 }
