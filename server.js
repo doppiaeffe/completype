@@ -1,16 +1,20 @@
-/*
+
 var express = require('express');
+var cors = require('cors');
+/*
 var bodyParser = require('body-parser');
 var logger = require('morgan');
 var methodOverride = require('method-override')
-var cors = require('cors');
 
-var app = express();
+
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(methodOverride());
-app.use(cors());
+
 */
+var app = express();
+app.use(cors());
 
 var server = require("http").Server(app);
 var io = require("socket.io")(server,{});
