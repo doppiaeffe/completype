@@ -1,0 +1,33 @@
+<html>
+    <body>
+
+        <a>LISTA UTENTI CONNESSI</a>
+        <br>
+        <div id="utenti">
+
+        </div>
+
+        <script>
+
+            function httpGet(theUrl, callback)
+            {
+                var xmlHttp = new XMLHttpRequest();
+                xmlHttp.onreadystatechange = function() { 
+                    if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                        callback(xmlHttp.responseText);
+                }
+                xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+                xmlHttp.send(null);
+            }
+
+            setInterval(function()
+            {
+                httpGet("https://completype-android.herokuapp.com/users",function(ret)
+                {
+                    console.log(ret)
+                })
+            },100)
+        </script>
+
+    </body>
+</html>

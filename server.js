@@ -1,27 +1,25 @@
 
 var express = require('express');
 var cors = require('cors');
-/*
 var bodyParser = require('body-parser');
 var logger = require('morgan');
 var methodOverride = require('method-override')
 
-
-
+var app = express();
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(methodOverride());
-
-*/
-var app = express();
 app.use(cors());
 
 var server = require("http").Server(app);
 var io = require("socket.io")(server,{});
-/*
-app.get("/", function(req, res)  {  res.sendFile(__dirname + "/client/index.html");});   
-app.use("/client", express.static(__dirname + "/client"));
-*/
+
+app.get("/", function(req, res)  {  res.sendFile(__dirname + "/index.html");});   
+app.get("/users", function(req, res)  
+{ 
+     res.send({ socket:socketList, waiting:waitingPlayers})
+});   
+
 
 server.listen(process.env.PORT || 8080);
 console.log("server started");
