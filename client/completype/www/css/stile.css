@@ -10,12 +10,19 @@
     height: auto;
 }
 
+.centrato_forza {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%)    
+}
+
 .stuff{
     height: auto;
     margin: 2%;
 
     font-family: 'Lato';
-    font-size: calc(0.35em + 1vw);
+    font-size: calc(1.2em + 0.1vw);
 }
 
 .cont{
@@ -24,7 +31,7 @@
     text-align: center;
     display: grid;
     position: relative;
-    grid-template-rows: 1fr 1fr 0.8fr 1fr 1fr;
+    grid-template-rows: 1fr 0.8fr 0.8fr 1fr;
 }
 
 .centralo{
@@ -60,7 +67,7 @@
     margin: auto;
 
     font-family: 'Lato';
-    font-size: calc(1.5em + 1.8vw);
+    font-size: calc(2.3em + 1.5vw);
     font-weight: bold;
 }
 

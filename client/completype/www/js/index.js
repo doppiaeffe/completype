@@ -29,7 +29,6 @@ var app = {
     onDeviceReady: function() {
 
         console.log('Received Event: ' + id);
-        alert("inizio")
 
 
     },
