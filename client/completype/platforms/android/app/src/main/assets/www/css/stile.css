@@ -1,0 +1,115 @@
+.riga1{
+    display: grid;
+    position: relative;
+
+    height: auto;
+    grid-template-columns: 1fr 4.3fr 1fr;
+}
+
+.pieno{
+    height: auto;
+}
+
+.stuff{
+    height: auto;
+    margin: 2%;
+
+    font-family: 'Lato';
+    font-size: calc(0.35em + 1vw);
+}
+
+.cont{
+    height: 90vh;
+    margin: auto;
+    text-align: center;
+    display: grid;
+    position: relative;
+    grid-template-rows: 1fr 1fr 0.8fr 1fr 1fr;
+}
+
+.centralo{
+    margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.risultato{
+    position: absolute;
+    z-index: 10;
+    height:100vh;
+    width: 100vw;
+    background:white;
+    color:#fff;
+    text-align: center;
+}
+
+.giusto{
+    font-size: calc(0.5em + 5vw);
+    color: black;
+    position: relative;
+    float: left;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.scelte{
+    height: auto;
+    margin: auto;
+
+    font-family: 'Lato';
+    font-size: calc(1.5em + 1.8vw);
+    font-weight: bold;
+}
+
+.score{
+    height: auto;
+    margin: auto;
+
+    font-family: 'Lato';
+    font-size: calc(1em + 1vw);
+    font-weight: 70;
+}
+
+.imma{
+    margin: auto;
+    padding-top: 2%;
+    height: calc(3em + 5vw);
+}
+
+.impo{
+    height: calc(2.5em + 1vw);
+    position: absolute;
+    right: 50px;
+    bottom: -13px;
+}
+
+a:link{    
+    color: black;
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: underline;
+}
+
+a:visited{
+    color: black;
+}
+
+a{
+    cursor: pointer;
+}
+
+/* -------------------------------------------------
+*******************animazioni***********************
+
+API GOOGLEFONTS AIzaSyDYEGUqAifTsMRoRGUu2Npo6g6k45gx3xk
+-------------------------------------------------*/
+
+@-webkit-keyframes fade-in{0%{opacity:0}100%{opacity:1}}@keyframes fade-in{0%{opacity:0}100%{opacity:1}}
+
+.pieno.fade-in{-webkit-animation:fade-in 7s cubic-bezier(.39,.575,.565,1.000) .3s both;animation:fade-in 7s cubic-bezier(.39,.575,.565,1.000) .3s both}
+

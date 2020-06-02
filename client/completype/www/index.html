@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+
+    <title>Completype</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" href="css/stile.css">
+
+</head>
+
+<body>
+    <div class="app centrato_forza">
+
+        <div id="attesa" class="risultato" style="display: none">
+            <p class="giusto">Ricerca di un avversario in corso, attendi...</p>
+        </div>
+
+        <div class="cont">
+            <div>
+                <div class="pieno fade-in"><img src="imgs/img-01.svg" class="imma"></img>
+                    <div class="stuff">Hai il carattere per vincere?</div>
+                </div>
+            </div>
+                <a onclick="buttonSingle()">
+                    <div class="scelte centrato_forza">Singolo</div>
+                </a>
+                <a onclick="buttonMulti()">
+                    <div class="scelte centrato_forza">Multigiocatore</div>
+                </a>
+                <div id="record" class="score">Miglior punteggio: xxxx</div>
+        </div>
+    </div>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+</body>
+
+
+<script>
+    let record = localStorage.getItem("points");
+
+    if (record == null)
+        record = 0
+
+
+    document.getElementById("record").innerHTML = "Miglior punteggio: " + record;
+
+
+    function buttonSingle() {
+        sessionStorage.setItem('multiplayer', "false")
+        window.location.href = "singolo.html"
+    }
+
+    function buttonMulti() {
+        sessionStorage.setItem('multiplayer', "true")
+        window.location.href = "singolo.html"
+    }
+</script>
