@@ -1,10 +1,8 @@
-
 var express = require('express');
-var cors = require('cors');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
 var methodOverride = require('method-override')
-var stringify = require('json-stringify-safe');
+var cors = require('cors');
 
 var app = express();
 app.use(logger('dev'));
@@ -15,13 +13,8 @@ app.use(cors());
 var server = require("http").Server(app);
 var io = require("socket.io")(server,{});
 
-app.get("/", function(req, res)  {  res.sendFile(__dirname + "/index.html");});   
-app.get("/users", function(req, res)  
-{ 
-
-     res.send({waiting:waitingPlayers})
-});   
-
+app.get("/", function(req, res)  {  res.sendFile(__dirname + "/sito/index.html");});   
+app.use("/client", express.static(__dirname + "/sito"));
 
 server.listen(process.env.PORT || 8080);
 console.log("server started");
