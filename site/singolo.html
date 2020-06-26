@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Completype</title>
+
+    <link rel="stylesheet" href="stilesingolo.css">
+</head>
+
+<body>
+    <div id="risultato" class="risultato" style="display: inline">
+        <p id="giusto" class="giusto" style="display: none">Corretto!<br><br>+100</p>
+        <p id="sbagliato" class="sbagliato" style="display: none">Hai sbagliato...</p>
+        <p id="tempo" class="sbagliato" style="display: none">Tempo scaduto</p>
+        <p id="ricerca" class="giusto" style="display: none">Corsa ai 1000<br>Attendi ricerca di un avversario in corso...</p>
+        <p id="first" class="sbagliato" style="display: none">L'avversario ha fatto punto<br>sei stato troppo lento...</p>
+        <p id="disconnect" class="sbagliato" style="display: none">L'avversario ha abbandonato la partita</p>
+    </div>
+
+    <style id="stile"></style>
+
+    <div class="cont">
+
+        <div class="capt">
+            <div class="rigapunti">
+                <div></div>
+                <div class="punti" id="punti">0</div>
+                <div class="escl"><img src="/client/imgs/punto.svg" class="imma"></div>
+                <div></div>
+            </div>
+
+            <div class="virgolette">
+                <div class="up"><img src="/client/imgs/virgUp.svg" class="buu"></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="lettver">
+                <div class="riga1">
+                    <div></div>
+                    <div class="lettera">a</div>
+                    <div class="lettera">e</div>
+                    <div class="lettera">i</div>
+                    <div class="lettera">o</div>
+                    <div class="lettera">u</div>
+                    <div class="lettera">y</div>
+                    <div></div>
+                </div>
+                <div class="riga1">
+                    <div></div>
+                    <div class="lettera">a</div>
+                    <div class="lettera">e</div>
+                    <div class="lettera">i</div>
+                    <div class="lettera">o</div>
+                    <div class="lettera">u</div>
+                    <div class="lettera">y</div>
+                    <div></div>
+                </div>
+                <div class="riga1">
+                    <div></div>
+                    <div class="lettera">a</div>
+                    <div class="lettera">e</div>
+                    <div class="lettera">i</div>
+                    <div class="lettera">o</div>
+                    <div class="lettera">u</div>
+                    <div class="lettera">y</div>
+                    <div></div>
+                </div>
+                <div class="riga1">
+                    <div></div>
+                    <div class="lettera">a</div>
+                    <div class="lettera">e</div>
+                    <div class="lettera">i</div>
+                    <div class="lettera">o</div>
+                    <div class="lettera">u</div>
+                    <div class="lettera">y</div>
+                    <div></div>
+                </div>
+            </div>
+            <div class="virgolette">
+                <div></div>
+                <div></div>
+                <div class="down"><img src="/client/imgs/virgDown.svg" class="buu"></div>
+            </div>
+        </div>
+
+        <div class="scelte" id="scelte">
+            <div></div>
+            <div class="aaa vibrate-1" id="prima" onclick="clickFont(1)" style="display: inline">X</div>
+            <div class="aaa vibrate-1" id="seconda" onclick="clickFont(2)" style="display: inline">X</div>
+            <div class="aaa vibrate-1" id="terza" onclick="clickFont(3)" style="display: inline">X</div>
+            <div></div>
+        </div>
+
+    </div>
+
+    <div id="timer" class="timer" style="display: block;">0</div>
+
+</body>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="fonts.js"></script>

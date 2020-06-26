@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Completype</title>
+    <link rel="stylesheet" href="/client/stile.css">
+</head>
+
+<body>
+
+    <div id="attesa" class="risultato" style="display: none">
+        <p class="giusto">Ricerca di un avversario in corso, attendi...</p>
+    </div>
+
+    <div class="cont">
+        
+            <div class="riga1">
+                <div></div>
+                <div class="pieno fade-in"><img src="/client/imgs/img-01.svg" class="imma"></img>
+                    <div class="stuff">Hai il carattere per vincere?</div></div>
+                <div></div>
+            </div>
+            <div class="riga1">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="riga1">
+                <div></div>
+                <a onclick="buttonSingle()">
+                    <div class="scelte" >Singolo</div>
+                </a>
+                <div></div>
+            </div>
+            <div class="riga1">
+                <div></div>
+                <a onclick="buttonMulti()">
+                    <div class="scelte">Multigiocatore</div>
+                </a>
+                <div></div>
+            </div>
+            <div class="riga1">
+                <div></div>
+                <div id="record" class="score">Miglior punteggio: xxxx</div>
+                <div></div>
+                <img src="/client/imgs/img-02.svg" class="impo"></img>
+            </div>
+        
+    </div>
+</body>
+
+
+<script>
+    let record = localStorage.getItem("points");
+
+    if (record == null) {
+        record = 0
+    }
+
+    document.getElementById("record").innerHTML = "Miglior punteggio: " + record;
+
+
+    function buttonSingle() {
+        sessionStorage.setItem('multiplayer', "false")
+        document.location.href = "/client/singolo.html"
+    }
+
+    function buttonMulti() {
+        sessionStorage.setItem('multiplayer', "true")
+        document.location.href = "/client/singolo.html"
+    }
+</script>
