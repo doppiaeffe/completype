@@ -13,8 +13,8 @@ app.use(cors());
 var server = require("http").Server(app);
 var io = require("socket.io")(server,{});
 
-app.get("/", function(req, res)  {  res.sendFile(__dirname + "/sito/index.html");});   
-app.use("/client", express.static(__dirname + "/sito"));
+app.get("/", function(req, res)  {  res.sendFile(__dirname + "/site/index.html");});   
+app.use("/client", express.static(__dirname + "/site"));
 
 server.listen(process.env.PORT || 8080);
 console.log("server started");
