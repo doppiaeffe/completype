@@ -896,7 +896,7 @@ function scegliFont()
 //scarica le font scelte da google font poi abbinali ai pulsanti
 function caricaFont()
 {
-    document.getElementById("stile").innerHTML="@import url('https://fonts.googleapis.com/css?family="+fontscelta1+"|"+fontscelta2+"|"+fontscelta3+"');";
+    document.getElementById("stile").innerHTML+=" @import url('https://fonts.googleapis.com/css?family="+fontscelta1+"|"+fontscelta2+"|"+fontscelta3+"');";
     
     document.getElementById("prima").style="font-family:'"+fontscelta1app+"';";
     document.getElementById("seconda").style="font-family:'"+fontscelta2app+"';";

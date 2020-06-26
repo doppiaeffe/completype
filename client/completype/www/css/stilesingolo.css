@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family="Lato"');
+
 @media only screen and (max-width: 600px) {
 p {
     margin: 0;
@@ -171,7 +173,6 @@ body {
     
     body {
         margin: 0;
-        font-family: 'Lato';
     }
     
     .cont {
@@ -268,6 +269,8 @@ body {
     .punti {
         font-size: calc(0.01em + 2vw);
         margin: auto;
+        font-style: italic;
+        font-family: 'Lato' !important;
     }
     
     .escl {
